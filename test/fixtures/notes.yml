@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  updateUserId: MyString
+  boolean: 
+  description: MyString
+
+two:
+  updateUserId: MyString
+  boolean: 
+  description: MyString
