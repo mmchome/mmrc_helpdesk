@@ -1,5 +1,6 @@
 MmrcHelpdesk::Application.routes.draw do
-  get "users/new"
+#get "users/new"
+resources :users
 root  'static_pages#home'
 match '/faq',    to: 'static_pages#faq',    via: 'get'
 match '/about',   to: 'static_pages#about',   via: 'get'
