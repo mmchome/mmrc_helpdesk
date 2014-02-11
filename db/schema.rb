@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140208172935) do
+ActiveRecord::Schema.define(version: 20140211094021) do
 
   create_table "issue_types", force: true do |t|
     t.string   "name"
@@ -52,11 +52,11 @@ ActiveRecord::Schema.define(version: 20140208172935) do
   end
 
   create_table "users", force: true do |t|
-    t.string   "firstName"
-    t.string   "lastName"
+    t.string   "first_name"
+    t.string   "last_name"
     t.string   "email"
-    t.string   "userName"
-    t.integer  "phoneExt"
+    t.string   "username"
+    t.integer  "phone_ext"
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"

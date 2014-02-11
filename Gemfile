@@ -13,8 +13,15 @@ gem 'bcrypt-ruby', '3.1.2'
 # Use sqlite3 as the database for Active Record
 group :development do
 	gem 'sqlite3', '1.3.8'
+
 end
 
+#User to create sample objects, maybe should only go on dev
+gem 'faker', '1.1.2'
+
+#pagination of index, not that pretty :(
+gem 'will_paginate', '3.0.4'
+gem 'bootstrap-will_paginate', '0.0.9'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '4.0.0'
