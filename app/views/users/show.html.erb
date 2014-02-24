@@ -8,4 +8,13 @@
       </h1>
     </section>
   </aside>
+    <div class="span8">
+    <% if @reported_by_ticket.any? %>
+      <h3>Reported tickets (<%= @reported_by_ticket.count %>)</h3>
+      <ol class="tickets">
+        <%= render @reported_by_ticket %>
+      </ol>
+      <%= will_paginate @reported_by_ticket %>
+    <% end %>
+  </div>
 </div>

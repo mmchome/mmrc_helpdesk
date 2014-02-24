@@ -1,0 +1,31 @@
+<% provide(:title, 'New Ticket') %>
+<h1>Sign up</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@ticket) do |f| %>
+
+      <%= render 'shared/error_messages',object: f.object %>
+
+      <%= f.label :title, "Tittle" %>
+      <%= f.text_field :tittle %>
+
+      <%= f.label :issue_type_id,  "Issue Type" %>
+      <%= f.collection_select(:issue_type_id, IssueType.all, :id, :name) %>
+
+      <%= f.label :description , "Issue description"%>
+      <%= f.text_area :description%>
+
+      <%= f.label :reported_by , "Reported by"%>
+      <%= f.collection_select(:reported_by, User.all, :id, :username) %>
+
+      <%= f.label :ticket_priority_id,  "Ticket Priority" %>
+      <%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name) %>
+
+      <%= f.label :ticket_state_id,  "Ticket State" %>
+      <%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {:selected => "Open"}) %>
+     
+      <%= f.submit "Create my account", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

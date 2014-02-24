@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140211094021) do
+ActiveRecord::Schema.define(version: 20140218065403) do
 
   create_table "issue_types", force: true do |t|
     t.string   "name"
@@ -20,9 +20,15 @@ ActiveRecord::Schema.define(version: 20140211094021) do
   end
 
   create_table "notes", force: true do |t|
-    t.string   "updateUserId"
-    t.boolean  "isSolution"
+    t.string   "updateuserid"
+    t.boolean  "is_solution"
     t.string   "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "ticket_priorities", force: true do |t|
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -34,16 +40,17 @@ ActiveRecord::Schema.define(version: 20140211094021) do
   end
 
   create_table "tickets", force: true do |t|
-    t.boolean  "isAssigned"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "tittle"
-    t.integer  "user_id"
     t.integer  "issue_type_id"
+    t.integer  "ticket_priority_id"
+    t.integer  "ticket_state_id"
+    t.string   "description"
+    t.integer  "asigned_to"
+    t.integer  "reported_by"
+    t.boolean  "is_assigned"
   end
-
-  add_index "tickets", ["issue_type_id"], name: "index_tickets_on_issue_type_id"
-  add_index "tickets", ["user_id"], name: "index_tickets_on_user_id"
 
   create_table "user_types", force: true do |t|
     t.string   "name"

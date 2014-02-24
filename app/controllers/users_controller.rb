@@ -43,6 +43,7 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
+    @reported_by_ticket = @user.reported_by_tickets.paginate(page: params[:page])
   end
 
   def index
@@ -55,11 +56,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:username,:first_name, :last_name, :email, :password,
                                    :password_confirmation, :user_types_id)   #not complete usertypes will need to be added separately
     end
-
-    def signed_in_user
-      redirect_to signin_url, notice: "Please sign in." unless signed_in?
-    end
-
+    
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)

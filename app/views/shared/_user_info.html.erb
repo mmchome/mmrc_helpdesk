@@ -1,0 +1,12 @@
+<%= link_to gravatar_for(current_user, size: 52), current_user %>
+<h1>
+  <%= current_user.username %>
+</h1>
+<span>
+  <%= link_to "View My Profile", current_user %>
+  <%= link_to "Create New Ticket", 'tickets/new' %>
+</span>
+<span>
+  <%= pluralize(current_user.reported_by_tickets.count, "Reported tickets") %>
+  <%= pluralize(current_user.assigned_to_tickets.count, "Assigned tickets") %>
+</span>
