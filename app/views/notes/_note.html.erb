@@ -1,0 +1,16 @@
+
+<tr>
+  <th>
+  	<span class="updateuser"><%=link_to  User.find(note.updateuserid).username , User.find(note.updateuserid)%></span>
+  </th>
+  <td>
+  	<% if  note.is_solution %>
+      <div class="sticky solution" > 
+    <%else %> 
+       <div class="sticky normal" > 
+    <%end %>
+      <%= note.description %>
+	  <span class="timestamp"><%= note.created_at.to_formatted_s(:long) %></span>
+	</div>
+  </td> 
+</tr>

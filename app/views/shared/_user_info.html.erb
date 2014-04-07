@@ -3,10 +3,11 @@
   <%= current_user.username %>
 </h1>
 <span>
-  <%= link_to "View My Profile", current_user %>
-  <%= link_to "Create New Ticket", 'tickets/new' %>
+  <%= link_to "My Profile", current_user %>
 </span>
 <span>
-  <%= pluralize(current_user.reported_by_tickets.count, "Reported tickets") %>
-  <%= pluralize(current_user.assigned_to_tickets.count, "Assigned tickets") %>
+  <%= link_to "Create Ticket", 'tickets/new' %>
 </span>
+
+
+

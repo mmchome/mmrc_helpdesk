@@ -1,0 +1,27 @@
+<% provide(:title, 'All Ticket') %>
+
+<h1>All tickets</h1>
+
+<div id="grid_here" style="width: 1000px; height: 1500px;"></div-->
+<script type="text/javascript" charset="UTF-8">
+     var grid = new dhtmlXGridObject("grid_here");
+     grid.setImagePath("assets/imgs/");
+     grid.setHeader("Id, Priority, IssueType, Tittle, ReportedBy,AssignedTo, State, Created, Updated");
+     grid.setColSorting("int,str,str,str,str,str, str,str, str");
+     grid.setInitWidths("35,90,100,200,85,85,100,100");
+     grid.setSkin("dhx_skyblue");
+     grid.init();
+     grid.load("<%= data_path %>", "json");
+
+     function doOnRowSelected(rowID,celInd){
+	    window.location="tickets/"+rowID;
+	 }
+     grid.attachEvent("onRowSelect",doOnRowSelected);
+
+     </script>
+
+
+ 
+
+
+

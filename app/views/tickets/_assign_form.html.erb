@@ -1,0 +1,9 @@
+<% unless current_user?(@user) %>
+  <div id="assign_form">
+  <% if ticket.assigned_to_user?(@user) %>
+    <%= render 'assign' %>
+  <% else %>
+    <%= render 'deassign' %>
+  <% end %>
+  </div>
+<% end %>

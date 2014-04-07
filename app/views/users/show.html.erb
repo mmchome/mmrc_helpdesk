@@ -16,5 +16,12 @@
       </ol>
       <%= will_paginate @reported_by_ticket %>
     <% end %>
+    <% if @assigned_to_ticket.any? %>
+      <h3>Assigned tickets (<%= @assigned_to_ticket.count %>)</h3>
+      <ol class="tickets">
+        <%= render @assigned_to_ticket %>
+      </ol>
+      <%= will_paginate @reported_by_ticket %>
+    <% end %>
   </div>
 </div>

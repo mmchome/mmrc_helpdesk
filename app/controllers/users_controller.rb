@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_action :signed_in_user, only: [:edit, :update]
+  before_action :signed_in_user, only: [:edit, :update, :show]
   before_action :correct_user,   only: [:edit, :update]
   before_action :admin_user,     only: :destroy
 
@@ -44,11 +44,13 @@ class UsersController < ApplicationController
   def show
   	@user = User.find(params[:id])
     @reported_by_ticket = @user.reported_by_tickets.paginate(page: params[:page])
+    @assigned_to_ticket = @user.assigned_to_tickets.paginate(page: params[:page])
   end
 
   def index
     @users = User.paginate(page: params[:page])
   end
+
 
   private
 

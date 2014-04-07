@@ -1,0 +1,69 @@
+<% provide(:title, @ticket.tittle) %>
+<h1>Ticket: <%=@ticket.id%></h1>
+
+<h2>Details</h2>
+<div class="center hero-unit">
+<table id='Details'>
+<%= form_for(@ticket) do |f| %>
+<tr>
+  <th>Created</th>
+  <td><%= @ticket.created_at.to_formatted_s(:long) %></td>
+  <th>Updated</th>
+  <td><%= @ticket.updated_at.to_formatted_s(:long) %></td>
+</tr>
+<tr>
+  <th>Reported by</th>
+  <td> <%= f.collection_select(:reported_by, User.all, :id, :username,{},:readonly => @is_readonly) %></td>
+
+  <th>Closed</th>
+  <td><%= @ticket.closed_at.to_formatted_s(:long) unless @ticket.closed_at==nil%></td>
+</tr>
+<tr>
+  <th>Priority</th>
+  <td><%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name,{},:readonly => @is_readonly) %></td>
+
+  <th>Current State</th>
+  <td><%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {},:readonly => @is_readonly) %></td>
+</tr>
+<tr>
+  <th>Assigned to</th>
+  <td> <%= f.collection_select(:assigned_to, User.where(:user_types_id=>[1,2]),:id, :username,
+  :include_blank => "Not Assigned") %></td>
+
+  <th>TicketType</th> 
+  <td> <%= f.collection_select(:issue_type_id, IssueType.all, :id, :name ,{},:readonly => @is_readonly) %></td>
+</tr>
+<tr>
+  <th>Tittle</th>
+  <td colspan="3"><%= f.text_field :tittle , :readonly => @is_readonly %></td>
+</tr>
+<tr>
+  <th>Description</th>
+  <td colspan="3"> <%= f.text_area :description, :size => "30x10" , :readonly => @is_readonly%></td>
+</tr>
+</table>
+  <%if !@is_closed %>
+    <%= f.submit "Save Changes", class: "btn btn-large btn-primary", :name => "save_changes" %>
+  <%else%>
+    <%= f.submit "Reopen", class: "btn btn-large btn-primary", :name => "reopen" %>
+  <%end%>
+<% end %>
+</div>
+
+<h2>Notes</h2>
+<div class="center hero-unit">
+  <% if  !@is_readonly %>
+    <%= form_for(@note) do |f| %>
+      <%= f.hidden_field :updateuserid, value: current_user.id  %>
+      <%= f.hidden_field :ticket_id, value:  @ticket.id  %>
+      <%= f.text_area :description, :size => "10x2" %>
+       Mark note as solution <%= f.check_box :is_solution %></br> 
+      <%= f.submit "Add Note", class: "btn btn-large btn-primary" %>
+    <% end %>
+  <% end %>
+  <% if  @ticket_notes.any? %>
+  <table>
+        <%= render  @ticket_notes %>
+  </table>
+ <% end %>
+</div>	

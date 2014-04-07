@@ -1,0 +1,34 @@
+<% provide(:title, 'New Ticket') %>
+<h1>Edit Ticket</h1>
+
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@ticket) do |f| %>
+
+      <%= render 'shared/error_messages',object: f.object %>
+
+      <%= f.label :title, "Tittle" %>
+      <%= f.text_field :tittle %>
+
+      <%= f.label :issue_type_id,  "Issue Type" %>
+      <%= f.collection_select(:issue_type_id, IssueType.all, :id, :name) %>
+
+      <%= f.label :description , "Issue description"%>
+      <%= f.text_area :description, :size => "30x10" %>
+
+      <%= f.label :reported_by , "Reported by"%>
+      <%= f.collection_select(:reported_by, User.all, :id, :username) %>
+
+      <%= f.label :assigned_to , "Assigned_to"%>
+      <%= f.collection_select(:assigned_to, User.where(:user_types_id=>[1,2]), :id, :username, :include_blank => "Not Assigned") %>
+
+      <%= f.label :ticket_priority_id,  "Ticket Priority" %>
+      <%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name, {:selected => 2}) %>
+
+      <%= f.label :ticket_state_id,  "Ticket State" %>
+      <%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {:selected => 4}) %>
+     
+      <%= f.submit "Edit", class: "btn btn-large btn-primary" %>
+    <% end %>
+  </div>
+</div>

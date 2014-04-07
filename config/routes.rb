@@ -1,14 +1,29 @@
 MmrcHelpdesk::Application.routes.draw do
-resources :users
-resource  :tickets ##how to i not allow destroy ???
-resources :sessions, only: [:new, :create, :destroy]
+
+match 'tickets/data', :to => 'tickets#data', :as => 'data', :via => 'get'
+
+# resources :users do
+#   member do
+#       get :reported, :assigned
+#     end
+#   end
+
 root  'static_pages#home'
+
+
 match '/faq',    to: 'static_pages#faq',    via: 'get'
 match '/about',   to: 'static_pages#about',   via: 'get'
 match '/contact', to: 'static_pages#contact', via: 'get'
 match '/signup',  to: 'users#new',            via: 'get'
 match '/signin',  to: 'sessions#new',         via: 'get'
 match '/signout', to: 'sessions#destroy',     via: 'delete'
+
+resources :sessions, only: [:new, :create, :destroy]
+resources  :tickets 
+resources :users
+resources :notes
+#match 'tickets/data', :to => 'tickets#data', :as => 'data', :via => 'get'
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

@@ -1,0 +1,16 @@
+<% @user ||= current_user %>
+<div class="stats">
+  <a >
+    <strong id="reported" class="stat">
+      <%= @user.reported_by_tickets.count %>
+    </strong>
+    Reported Tickets
+  </a>
+  <a >
+    <strong id="assigned" class="stat">
+      <%= @user.assigned_to_tickets.count %>
+    </strong>
+    Assigned Tickets
+  </a>
+
+</div>

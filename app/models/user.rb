@@ -28,8 +28,8 @@ class User < ActiveRecord::Base
 	has_secure_password
 
   def feed
-    # This is preliminary. See "Following users" for the full implementation.
-    Ticket.where("reported_by = ?", id)
+    # This is preliminary. Feeding all open tickets
+    Ticket.where("ticket_state_id = ?", 4)
   end
 
 	def User.new_remember_token

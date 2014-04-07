@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140218065403) do
+ActiveRecord::Schema.define(version: 20140405142019) do
 
   create_table "issue_types", force: true do |t|
     t.string   "name"
@@ -25,7 +25,10 @@ ActiveRecord::Schema.define(version: 20140218065403) do
     t.string   "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "ticket_id"
   end
+
+  add_index "notes", ["ticket_id"], name: "index_notes_on_ticket_id"
 
   create_table "ticket_priorities", force: true do |t|
     t.string   "name"
@@ -47,10 +50,14 @@ ActiveRecord::Schema.define(version: 20140218065403) do
     t.integer  "ticket_priority_id"
     t.integer  "ticket_state_id"
     t.string   "description"
-    t.integer  "asigned_to"
+    t.integer  "assigned_to"
     t.integer  "reported_by"
     t.boolean  "is_assigned"
+    t.datetime "close_at"
   end
+
+  add_index "tickets", ["assigned_to"], name: "index_tickets_on_assigned_to"
+  add_index "tickets", ["reported_by"], name: "index_tickets_on_reported_by"
 
   create_table "user_types", force: true do |t|
     t.string   "name"

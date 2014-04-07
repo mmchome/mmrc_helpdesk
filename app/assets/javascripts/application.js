@@ -9,10 +9,11 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
+// OMG THE ORDER OF THESE REQUIRED's matters so much  aaaaaaaaaaaaaaaaaaaaah
 //
-//= require jquery
-// require jquery-ui
-//= require jquery_ujs
 //= require bootstrap
+//= require jquery_ujs
+//= require jquery
 //= require turbolinks
 //= require_tree .
+

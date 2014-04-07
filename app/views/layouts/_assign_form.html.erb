@@ -1,0 +1,9 @@
+<% unless current_user?(@user) %>
+  <div id="follow_form">
+  <% if current_user.assigned_to_ticket(@user) %>
+    <%= render 'de_assign' %>
+  <% else %>
+    <%= render 'assign' %>
+  <% end %>
+  </div>
+<% end %>
