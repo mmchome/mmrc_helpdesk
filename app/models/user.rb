@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
 	has_secure_password
 
   def feed
-    Ticket.where("ticket_state_id = ?", 4)
+    Ticket.where("ticket_state_id = ?", 1)
   end
 
 	def User.new_remember_token
