@@ -1,0 +1,6 @@
+<h1>Listing Tickets</h1>
+<ul id="ticket_list">
+<% @tickets.each do |c| %>
+<li><%= link_to c.tittle, :action => 'show', :id => c.id %>
+<% end %>
+</ul>
