@@ -2,8 +2,6 @@
 
 <h1>All tickets</h1>
 
-
-
 <div id="all_tickets">
      <%= render 'search' %>
      <%= render 'search_results' %>
@@ -28,21 +26,7 @@
      grid.attachEvent("onRowSelect",doOnRowSelected);
 
      </script-->
-<script type="text/javascript">
 
-$(function() {
-  $("#all_tickets th a, #all_tickets .pagination a").live("click", function() {
-    $.getScript(this.href);
-    alert("You clicked");
-    return false;
-  });
-  
-  $("#tickets_search input").keyup(function() {
-    $.get($("#tickets_search").attr("action"), $("#tickets_search").serialize(), null, "script");
-    return false;
-  });
-});
-</script>
 
  
 
