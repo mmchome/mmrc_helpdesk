@@ -17,13 +17,13 @@
       <%= f.text_area :description, :size => "30x10" %>
 
       <%= f.label :reported_by , "Reported by"%>
-      <%= f.collection_select(:reported_by, User.all, :id, :username) %>
+      <%= f.collection_select(:reported_by, User.all, :id, :username,{:selected =>@current_user.id}) %>
 
       <%= f.label :ticket_priority_id,  "Ticket Priority" %>
-      <%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name, {:selected => 2}) %>
+      <%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name, {:selected => 3}) %>
 
       <%= f.label :ticket_state_id,  "Ticket State" %>
-      <%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {:selected => 4}) %>
+      <%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {:selected => 1}) %>
      
       <%= f.submit "Create ticket!", class: "btn btn-large btn-primary" %>
     <% end %>

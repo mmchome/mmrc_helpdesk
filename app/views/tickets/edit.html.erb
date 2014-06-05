@@ -23,7 +23,7 @@
       <%= f.collection_select(:assigned_to, User.where(:user_types_id=>[1,2]), :id, :username, :include_blank => "Not Assigned") %>
 
       <%= f.label :ticket_priority_id,  "Ticket Priority" %>
-      <%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name, {:selected => 2}) %>
+      <%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name, {:selected => 3}) %>
 
       <%= f.label :ticket_state_id,  "Ticket State" %>
       <%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {:selected => 4}) %>

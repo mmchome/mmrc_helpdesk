@@ -71,7 +71,7 @@ class TicketsController < ApplicationController
       end
       #need to traverse changes to write human readable update message
       update_message="#{current_user.username} has changed #{@ticket.changes}"
-      @sys_note = Note.create(updateuserid: 5, description: update_message, ticket_id: @ticket.id)
+      @sys_note = Note.create(updateuserid: 1, description: update_message, ticket_id: @ticket.id)
       if save_all(@ticket, @sys_note)
         flash[:success] = "Ticket updated"
         redirect_to @ticket
@@ -89,8 +89,8 @@ class TicketsController < ApplicationController
   def show
     @ticket = Ticket.find(params[:id])
     @ticket_notes = @ticket.notes
-    @ticket_notes_user =   @ticket_notes.where('updateuserid!=5')
-    @ticket_notes_system=   @ticket_notes.where('updateuserid=5')
+    @ticket_notes_user =   @ticket_notes.where('updateuserid!=1')
+    @ticket_notes_system=   @ticket_notes.where('updateuserid=1')
     @note = Note.new
     @is_readonly = is_ticket_readonly
     @is_closed = is_closed
