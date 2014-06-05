@@ -12,8 +12,20 @@
 // OMG THE ORDER OF THESE REQUIRED's matters so much  aaaaaaaaaaaaaaaaaaaaah
 //
 //= require bootstrap
-//= require jquery_ujs
 //= require jquery
+//= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(function() {
+  $("#all_tickets th a, #all_tickets .pagination a").live("click", function() {
+    $.getScript(this.href);
+    //alert("You clicked");
+    return false;
+  });
+  $("#tickets_search input").keyup(function() {
+    $.get($("#tickets_search").attr("action"), $("#tickets_search").serialize(), null, "script");
+    return false;
+  });
+});
 

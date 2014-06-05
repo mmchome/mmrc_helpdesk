@@ -2,7 +2,7 @@ class UsersController < ApplicationController
 
   before_action :signed_in_user, only: [:edit, :update, :show]
   before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+  before_action :admin_user,     only: [:destroy, :update]
 
   def new
   	@user = User.new
@@ -19,6 +19,11 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    if  user_params[:password].blank?
+      user_params.delete(:password)
+      user_params.delete(:password_confirmation)
+    end
+  
     if @user.update_attributes(user_params)
       flash[:success] = "Profile updated"
       redirect_to @user
@@ -55,16 +60,17 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:username,:first_name, :last_name, :email, :password,
-                                   :password_confirmation, :user_types_id)   #not complete usertypes will need to be added separately
+      params.require(:user).permit(:username,:first_name, :last_name, :email,:user_types_id,:password,:password_confirmation,)   #not complete usertypes will need to be added separately
     end
     
+    def admin_user
+      redirect_to(root_url) unless current_user.user_types_id==1
+    end
+
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      redirect_to(root_url) unless current_user?(@user)||current_user.user_types_id==1
     end
   
-    def admin_user
-        redirect_to(root_url) unless current_user.user_types_id==1
-    end
+
 end

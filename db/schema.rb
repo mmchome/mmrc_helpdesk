@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140405142019) do
+ActiveRecord::Schema.define(version: 20140602112703) do
 
   create_table "issue_types", force: true do |t|
     t.string   "name"
@@ -53,11 +53,8 @@ ActiveRecord::Schema.define(version: 20140405142019) do
     t.integer  "assigned_to"
     t.integer  "reported_by"
     t.boolean  "is_assigned"
-    t.datetime "close_at"
+    t.datetime "closed_at"
   end
-
-  add_index "tickets", ["assigned_to"], name: "index_tickets_on_assigned_to"
-  add_index "tickets", ["reported_by"], name: "index_tickets_on_reported_by"
 
   create_table "user_types", force: true do |t|
     t.string   "name"
@@ -74,7 +71,7 @@ ActiveRecord::Schema.define(version: 20140405142019) do
     t.string   "location"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_types_id"
+    t.integer  "user_types_id",   default: 3
     t.string   "password_digest"
     t.string   "remember_token"
   end

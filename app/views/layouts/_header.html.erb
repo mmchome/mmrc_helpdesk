@@ -1,12 +1,9 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
 <div class="navbar-inner">
   <div class="container">
-    <%= link_to "MMRC Helpdesk", '#', id: "logo" %>
+    <%= link_to "MMRC Helpdesk", new_ticket_path, id: "logo" %>
     <nav>
       <ul class="nav pull-right">
-        <li><%= link_to "About", about_path %></li>
-        <li><%= link_to "Contact",    contact_path %></li>
-        <li><%= link_to "FAQ", faq_path %></li>
         <li><%= link_to "Home", root_path %></li>
          <% if signed_in? %>
             <li><%= link_to "Users", users_path %></li>
@@ -24,6 +21,19 @@
                 </li>
               </ul>
             </li>
+            <!--li>
+              <!--form class="navbar-form navbar-right" role="search">
+                <!--%= form_tag tickets_path,action: "search", method: :get  do %>
+                  <!--%= text_field_tag :search, params[:search],placeholder: 'Search for ticket'%>
+                  <!--%= text_field_tag :query, params[:query], {:class =>"search-query", :placeholder=>"Search"}  %-->
+                  <!--%= submit_tag 'Search', :id=>"nav_search_btn" %-->
+               
+              <!--/form-->
+                <!--div id="search">
+                <--%= render :partial => 'tickets/search' %>
+              </div>
+            </li-->
+             
           <% else %>
             <li><%= link_to "Sign in", signin_path %></li>
           <% end %>

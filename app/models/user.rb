@@ -1,5 +1,4 @@
 class User < ActiveRecord::Base
-  
   has_many :reported_by_tickets, :class_name => 'Ticket', :foreign_key => 'reported_by'
   has_many :assigned_to_tickets, :class_name => 'Ticket', :foreign_key => 'assigned_to'
 
@@ -24,11 +23,10 @@ class User < ActiveRecord::Base
 
 	
 
-	validates :password, length: { minimum: 6 }
+	validates :password, length: { minimum: 6 }, :if => :password
 	has_secure_password
 
   def feed
-    # This is preliminary. Feeding all open tickets
     Ticket.where("ticket_state_id = ?", 4)
   end
 

@@ -8,7 +8,8 @@ class Ticket < ActiveRecord::Base
 	belongs_to :state, :class_name => 'TicketState', foreign_key: 'ticket_state_id'
 	has_many :notes,  dependent: :destroy
 	
-	default_scope -> { order('created_at DESC') }
+	#default_scope -> { order('created_at DESC') } 
+	#since use a sortable table disable above else causes confluct
 
 	validates :reported_by, presence: true
 	validates :tittle, presence: true
@@ -24,6 +25,16 @@ class Ticket < ActiveRecord::Base
 	def reported?(to_user)
 	  	tickets.find_by(reported_by: to_user.id)
 	end
+
+	def self.search(search)
+		 if search
+   			search_condition = "%" + search + "%"
+  				where(['tittle LIKE ?  OR id=?', search_condition, search])
+  		else
+    		scoped
+    	end
+  	end
+  		
 
 	def assign!(to_user)
 	  	ticket.update(assigned_to: to_user.id)

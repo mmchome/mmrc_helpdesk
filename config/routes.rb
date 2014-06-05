@@ -1,6 +1,7 @@
 MmrcHelpdesk::Application.routes.draw do
 
 match 'tickets/data', :to => 'tickets#data', :as => 'data', :via => 'get'
+match 'tickets/search', :to => 'tickets#search', via: 'post'
 
 # resources :users do
 #   member do
@@ -17,6 +18,7 @@ match '/contact', to: 'static_pages#contact', via: 'get'
 match '/signup',  to: 'users#new',            via: 'get'
 match '/signin',  to: 'sessions#new',         via: 'get'
 match '/signout', to: 'sessions#destroy',     via: 'delete'
+match '/list',  to: 'tickets#list', via: 'get'
 
 resources :sessions, only: [:new, :create, :destroy]
 resources  :tickets 

@@ -1,27 +1,39 @@
 class TicketsController < ApplicationController
+
+  helper_method :sort_column, :sort_direction
 	
-  before_action :signed_in_user, only: [:edit, :update,:create,:show]
+  before_action :signed_in_user, only: [:edit, :update,:create,:show, :new, :index]
+
+  # def list
+  #    @tickets = Ticket.find(:all)
+  # end
+
+  def search
+    @tickets = Ticket.search params[:search] 
+  end
 
   def index
-  end
- 
+    @tickets = Ticket.search(params[:search]) .order(sort_column + " " + sort_direction)
+    .paginate(:per_page => 5, :page => params[:page])
+  end 
   
-  def data
-    tickets = Ticket.all
+  # def data
+  #   #tickets = Ticket.all
 
-    render :json => {
-      :total_count => tickets.length,
-      :pos => 0,
-      :rows => tickets.map do |ticket|
-       {
-          :id => ticket.id,
-          :data => [ ticket.id, ticket.priority.name, ticket.issue_type.name, ticket.tittle, 
-            ticket.reported_by_user.username, if ticket.assigned_to_user!= nil then  ticket.assigned_to_user.username
-    else  'Unassigned' end,ticket.state.name, ticket.created_at, ticket.updated_at]
-       }
-          end
-      }
-  end
+  #   render :json => {
+  #     :total_count => @tickets.length,
+  #     :pos => 0,
+  #     :rows => @tickets.map do |ticket|
+  #      {
+  #         :id => ticket.id,
+  #         :data => [ ticket.id, ticket.priority.name, ticket.issue_type.name, ticket.tittle, 
+  #           ticket.reported_by_user.username, if ticket.assigned_to_user!= nil then  ticket.assigned_to_user.username
+  #   else  'Unassigned' end,ticket.state.name, ticket.created_at, ticket.updated_at]
+  #      }
+  #         end
+  #     }
+  # end
+
 
   def create
   	@ticket = current_user.reported_by_tickets.build(ticket_params)
@@ -52,7 +64,7 @@ class TicketsController < ApplicationController
         if(@ticket.notes.where("is_solution='t'").any?)
           @ticket.closed_at=Time.now
         else
-          flash[:error] = "Please write solution on note section before closing ticket"
+          flash[:error] = "Please write solution on the notes section before closing the ticket"
           redirect_to @ticket
           return
         end
@@ -73,9 +85,12 @@ class TicketsController < ApplicationController
    end
   end
 
+
   def show
     @ticket = Ticket.find(params[:id])
     @ticket_notes = @ticket.notes
+    @ticket_notes_user =   @ticket_notes.where('updateuserid!=5')
+    @ticket_notes_system=   @ticket_notes.where('updateuserid=5')
     @note = Note.new
     @is_readonly = is_ticket_readonly
     @is_closed = is_closed
@@ -96,13 +111,24 @@ class TicketsController < ApplicationController
         redirect_to(root_url) unless current_user.user_types_id==1
     end
 
-    
+
+    def sort_column
+      Ticket.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+  
+    def sort_direction
+     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+    end    
 
     def save_all(*models)
       if models.map { |rec| rec.valid? }.all?
         models.each { |rec| rec.save! }
         true
       end
+    end
+
+    def sys_note_message()
+
     end
 
     def is_ticket_readonly
@@ -122,7 +148,7 @@ class TicketsController < ApplicationController
     end
 
     def user_can_edit
-      if(current_user.user_types_id==1 || current_user.user_type_id==2 || current_user.id==@ticket.reported_by)
+      if(current_user.user_types_id==1 || current_user.user_types_id==2 || current_user.id==@ticket.reported_by)
         true
       else
         false

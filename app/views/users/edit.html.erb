@@ -12,20 +12,29 @@
       <%= f.label :last_name, "Last Name" %>
       <%= f.text_field :last_name %>
 
-      <%= f.label :username, "Username" %>
-      <%= f.text_field :username %>
-
       <%= f.label :email %>
       <%= f.text_field :email %>
 
-      <%= f.label :password %>
-      <%= f.password_field :password %>
+      <p>
+       Change Password <%= check_box_tag :change_password,'change password',true  %>
+      </p>
 
-      <%= f.label :password_confirmation, "Confirm Password" %>
-      <%= f.password_field :password_confirmation %>
+      <div id="password_form">
+        <%= f.label :password %>
+        <%= f.password_field :password %>
 
-      <%= f.label :user_types_id, "Role" %>
-      <%= f.collection_select(:user_types_id, UserType.all, :id, :name) %>
+        <%= f.label :password_confirmation, "Confirm Password" %>
+        <%= f.password_field :password_confirmation %>
+      </div>
+      
+
+      <% if @current_user.user_types_id==1 %>
+        <%= f.label :username, "Username" %>
+        <%= f.text_field :username %>
+
+        <%= f.label :user_types_id, "Role" %>
+        <%= f.collection_select(:user_types_id, UserType.all, :id, :name) %>
+      <%end %>
 
       <%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
     <% end %>
@@ -34,3 +43,15 @@
     <a href="http://gravatar.com/emails">change</a>
   </div>
 </div>
+
+<script type="text/javascript">
+  var checkbox = document.getElementById('change_password');
+  var details_div = document.getElementById('password_form');
+  checkbox.onchange = function() {
+     if(this.checked) {
+       details_div.style['display'] = 'block';
+     } else {
+       details_div.style['display'] = 'none';
+     }
+  };
+</script>

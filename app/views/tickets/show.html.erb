@@ -34,7 +34,7 @@
   <td> <%= f.collection_select(:issue_type_id, IssueType.all, :id, :name ,{},:readonly => @is_readonly) %></td>
 </tr>
 <tr>
-  <th>Tittle</th>
+  <th>Title</th>
   <td colspan="3"><%= f.text_field :tittle , :readonly => @is_readonly %></td>
 </tr>
 <tr>
@@ -58,12 +58,21 @@
       <%= f.hidden_field :ticket_id, value:  @ticket.id  %>
       <%= f.text_area :description, :size => "10x2" %>
        Mark note as solution <%= f.check_box :is_solution %></br> 
-      <%= f.submit "Add Note", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Make a Note", class: "btn btn-large btn-primary" %>
     <% end %>
   <% end %>
-  <% if  @ticket_notes.any? %>
-  <table>
-        <%= render  @ticket_notes %>
+  <% if@ticket_notes_user.any? %>
+  <table class="notes">
+        <%= render  @ticket_notes_user%>
   </table>
  <% end %>
 </div>	
+
+<h2>History</h2>
+<div class="center hero-unit">
+  <% if@ticket_notes_system.any? %>
+  <table class="table">
+        <%= render  'notes/system_note'%>
+  </table>
+ <% end %>
+</div> 
