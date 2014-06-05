@@ -89,8 +89,8 @@ class TicketsController < ApplicationController
   def show
     @ticket = Ticket.find(params[:id])
     @ticket_notes = @ticket.notes
-    @ticket_notes_user =   @ticket_notes.where('updateuserid!=1')
-    @ticket_notes_system=   @ticket_notes.where('updateuserid=1')
+    @ticket_notes_user = @ticket_notes.where.not(updateuserid: '1')
+    @ticket_notes_system=  @ticket_notes.where(updateuserid: '1')
     @note = Note.new
     @is_readonly = is_ticket_readonly
     @is_closed = is_closed

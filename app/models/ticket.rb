@@ -29,7 +29,8 @@ class Ticket < ActiveRecord::Base
 	def self.search(search)
 		 if search
    			search_condition = "%" + search + "%"
-  				where(['tittle LIKE ?  OR id=?', search_condition, search])
+   				where (['tittle LIKE ?  OR description LIKE ?', search_condition, search_condition])
+  				#where(['tittle LIKE ?  OR id=?', search_condition, search]) -- commenting out id search as not work on postgres in prod
   		else
     		scoped
     	end
