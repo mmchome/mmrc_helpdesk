@@ -27,20 +27,22 @@ class Ticket < ActiveRecord::Base
 	end
 
 	def self.search(search)
-		 if search
+		if search
    			search_condition = "%" + search + "%"
-   				where (['tittle LIKE ?  OR description LIKE ?', search_condition, search_condition])
-  				#where(['tittle LIKE ?  OR id=?', search_condition, search]) -- commenting out id search as not work on postgres in prod
+   			where (['tittle LIKE ?  OR description LIKE ?', search_condition, search_condition])
   		else
     		scoped
     	end
   	end
   		
 
+  
 	def assign!(to_user)
 	  	ticket.update(assigned_to: to_user.id)
 	  	ticket.update(is_assigned: true)
 	end
+
+	
 
 	def deassign!()
     	ticket.update(assigned_to: nil)
