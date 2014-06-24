@@ -1,4 +1,4 @@
-<% provide(:title, @ticket.tittle) %>
+<% provide(:title, @ticket.title) %>
 <h1>Ticket: <%=@ticket.id%></h1>
 
 <h2>Details</h2>
@@ -35,7 +35,7 @@
 </tr>
 <tr>
   <th>Title</th>
-  <td colspan="3"><%= f.text_field :tittle , :readonly => @is_readonly %></td>
+  <td colspan="3"><%= f.text_field :title , :readonly => @is_readonly %></td>
 </tr>
 <tr>
   <th>Description</th>

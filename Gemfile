@@ -14,6 +14,10 @@ gem 'rails', '4.0.4'
 #for adding encrypted password
 gem 'bcrypt-ruby', '3.1.2'
 
+#for improved text-search
+gem 'sunspot_rails', '2.1.1'
+gem 'sunspot_solr'
+
 # Use sqlite3 as the database for Active Record
 group :development do
 	gem 'sqlite3', '1.3.8'

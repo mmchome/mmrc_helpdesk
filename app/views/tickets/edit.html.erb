@@ -7,8 +7,8 @@
 
       <%= render 'shared/error_messages',object: f.object %>
 
-      <%= f.label :title, "Tittle" %>
-      <%= f.text_field :tittle %>
+      <%= f.label :title, "Title" %>
+      <%= f.text_field :title %>
 
       <%= f.label :issue_type_id,  "Issue Type" %>
       <%= f.collection_select(:issue_type_id, IssueType.all, :id, :name) %>

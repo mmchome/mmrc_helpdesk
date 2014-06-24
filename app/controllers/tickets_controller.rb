@@ -8,13 +8,18 @@ class TicketsController < ApplicationController
   #    @tickets = Ticket.find(:all)
   # end
 
-  def search
-    @tickets = Ticket.search params[:search] 
-  end
+  # def search
+  #   @tickets = Ticket.search params[:search] 
+  # end
 
   def index
-    @tickets = Ticket.search(params[:search]) .order(sort_column + " " + sort_direction)
-    .paginate(:per_page => 5, :page => params[:page])
+    #@tickets = Ticket.search(params[:search]) .order(sort_column + " " + sort_direction).paginate(:per_page => 5, :page => params[:page])
+      @search = Ticket.search do
+        fulltext params[:search]
+        order_by(sort_column,sort_direction)
+      end
+      @tickets = @search.results
+      #.paginate(:per_page => 5, :page => params[:page])    
   end 
 
   def create
@@ -85,7 +90,7 @@ class TicketsController < ApplicationController
   private
 
     def ticket_params
-      params.require(:ticket).permit(:tittle, :description,:issue_type_id, 
+      params.require(:ticket).permit(:title, :description,:issue_type_id, 
         :ticket_state_id, :ticket_priority_id,:reported_by, :assigned_to, :is_assigned)
     end
 
@@ -99,7 +104,7 @@ class TicketsController < ApplicationController
     end
   
     def sort_direction
-     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+     %W[asc ,desc].include?(params[:direction]) ? params[:direction] : "desc"
     end    
 
     def save_all(*models)
