@@ -25,27 +25,27 @@ class Ticket < ActiveRecord::Base
 	  	tickets.find_by(reported_by: to_user.id)
 	end
 
-	# def self.search(search)
-	# 	if search
- #   			search_condition = "%" + search + "%"
- #   			where (['tittle LIKE ?  OR description LIKE ?', search_condition, search_condition])
- #  		else
- #    		scoped
- #    	end
- #  	end
+	def self.search(search)
+		if search
+   			search_condition = "%" + search + "%"
+   			where (['title LIKE ?  OR description LIKE ?', search_condition, search_condition])
+  		else
+    		scoped
+    	end
+  	end
 
   	#using the sunsolar textsearch gem
-  	searchable do
-   		text :title, :description
-   		text :issue_type_name
-   		text :priority_name 
-   		text :state_name, :id,:reported_name
-   		string :title
-   		integer :id
-   		time :created_at
-   		time :updated_at
+  	# searchable do
+   # 		text :title, :description
+   # 		text :issue_type_name
+   # 		text :priority_name 
+   # 		text :state_name, :id,:reported_name
+   # 		string :title
+   # 		integer :id
+   # 		time :created_at
+   # 		time :updated_at
 
-  	end
+  	# end
 
   	def issue_type_name
   		issue_type.name

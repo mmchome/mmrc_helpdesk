@@ -13,12 +13,12 @@ class TicketsController < ApplicationController
   # end
 
   def index
-    #@tickets = Ticket.search(params[:search]) .order(sort_column + " " + sort_direction).paginate(:per_page => 5, :page => params[:page])
-      @search = Ticket.search do
-        fulltext params[:search]
-        order_by(sort_column,sort_direction)
-      end
-      @tickets = @search.results
+    @tickets = Ticket.search(params[:search]) .order(sort_column + " " + sort_direction).paginate(:per_page => 5, :page => params[:page])
+      # @search = Ticket.search do
+      #   fulltext params[:search]
+      #   order_by(sort_column,sort_direction)
+      # end
+      # @tickets = @search.results
       #.paginate(:per_page => 5, :page => params[:page])    
   end 
 
