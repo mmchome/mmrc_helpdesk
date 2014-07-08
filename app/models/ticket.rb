@@ -2,13 +2,13 @@ class Ticket < ActiveRecord::Base
 	include ActiveModel::Dirty
 	belongs_to :assigned_to_user, :class_name => 'User',foreign_key: 'assigned_to'
 	belongs_to :reported_by_user, :class_name => 'User',foreign_key: 'reported_by'
-    belongs_to :priority, :class_name => 'TicketPriority', foreign_key: 'ticket_priority_id'
+  belongs_to :priority, :class_name => 'TicketPriority', foreign_key: 'ticket_priority_id'
 	belongs_to :issue_type, :class_name => 'IssueType', foreign_key: 'issue_type_id'
 	belongs_to :state, :class_name => 'TicketState', foreign_key: 'ticket_state_id'
 	has_many :notes,  dependent: :destroy
 	
 	#default_scope -> { order('created_at DESC') } 
-	#since use a sortable table disable above else causes confluct
+	#since use a sortable table disable above else causes conflict
 
 	validates :reported_by, presence: true
 	validates :title, presence: true
@@ -26,9 +26,15 @@ class Ticket < ActiveRecord::Base
 	end
 
 	def self.search(search)
-		if search
-   			search_condition = "%" + search + "%"
-   			where (['title LIKE ?  OR description LIKE ?', search_condition, search_condition])
+		 if search
+        if(search.to_i!=0)
+          where (['id ==?', search])
+        else
+          search_condition = "%" + search + "%"
+          joins(:issue_type, :state, :priority).
+          where("title LIKE ? OR description LIKE ? OR issue_types.name LIKE ? OR ticket_states.name LIKE ? OR ticket_priorities.name LIKE ?",
+                search_condition,search_condition,search_condition,search_condition,search_condition)
+        end
   		else
     		scoped
     	end
