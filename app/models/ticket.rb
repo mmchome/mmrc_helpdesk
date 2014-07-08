@@ -28,9 +28,13 @@ class Ticket < ActiveRecord::Base
 	def self.search(search)
 		 if search
         if(search.to_i!=0)
-          where (['id ==?', search])
+          where (['id =?', search])
         else
-          search_condition = "%" + search + "%"
+          if(search.size >1)
+            search_condition = "%" + search[1..-1] + "%"
+          else
+            search_condition = "%" + search + "%"
+          end
           joins(:issue_type, :state, :priority).
           where("title LIKE ? OR description LIKE ? OR issue_types.name LIKE ? OR ticket_states.name LIKE ? OR ticket_priorities.name LIKE ?",
                 search_condition,search_condition,search_condition,search_condition,search_condition)
