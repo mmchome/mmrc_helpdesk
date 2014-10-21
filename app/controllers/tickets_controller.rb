@@ -4,16 +4,9 @@ class TicketsController < ApplicationController
 	
   before_action :signed_in_user, only: [:edit, :update,:create,:show, :new, :index]
 
-  # def list
-  #    @tickets = Ticket.find(:all)
-  # end
-
-  # def search
-  #   @tickets = Ticket.search params[:search] 
-  # end
 
   def index
-    @tickets = Ticket.search(params[:search]) .order(sort_column + " " + sort_direction).paginate(:per_page => 5, :page => params[:page])
+    @tickets = Ticket.search(params[:search]) .order(sort_column + " " + sort_direction).paginate(:per_page => 15, :page => params[:page])
       # @search = Ticket.search do
       #   fulltext params[:search]
       #   order_by(sort_column,sort_direction)
@@ -27,6 +20,7 @@ class TicketsController < ApplicationController
     if @ticket.save 
       flash[:success] = "Ticket created!"
       redirect_to root_url
+      UserMailer.ticket_opened(@ticket.reported_by_user, @ticket.assigned_to_user,@ticket).deliver
     else
       @feed_items = []
       render 'new'
@@ -39,8 +33,11 @@ class TicketsController < ApplicationController
 
   def update
     @ticket = Ticket.find(params[:id])
+    @is_reassigned= false
+    @is_opened= false
+    @previous_assignee=nil
     if params[:reopen] && is_closed
-      @ticket.ticket_state_id=4
+      @ticket.ticket_state_id=1
     elsif(params[:save_changes] && !is_closed && user_can_edit)
        @ticket.assign_attributes(ticket_params)
     end
@@ -57,9 +54,54 @@ class TicketsController < ApplicationController
         end
       end
       #need to traverse changes to write human readable update message
-      update_message="#{current_user.username} has changed #{@ticket.changes}"
+      update_message="#{current_user.username} has made the following changes:"
+      #{}{@ticket.changes}"
+      @ticket.changes.each do |key, value|
+        update_message+= "\n"
+        if(key=="reported_by")
+          update_message+="Ticket Reporter from: #{User.find(value[0]).username} to #{User.find(value[1]).username}"
+        elsif(key=="ticket_priority_id")
+          update_message+="Ticket Priority from: #{TicketPriority.find(value[0]).name} to #{TicketPriority.find(value[1]).name}"
+        elsif(key=="ticket_state_id")
+          #ticket is currently closed and will be marked as open
+          if(is_closed & value[1]==1)
+            @is_opened= true
+          end
+          update_message+="Ticket State from: #{TicketState.find(value[0]).name} to #{TicketState.find(value[1]).name}"
+        elsif(key=="issue_type_id")
+          update_message+="TicketType from: #{IssueType.find(value[0]).name} to #{IssueType.find(value[1]).name}"
+        elsif(key=="assigned_to")
+          update_message+="Assigned Technician from: "
+           @is_reassigned=true;
+           if value[0]!=nil 
+             @previous_assignee=User.find(value[0])
+             update_message+="#{@previous_assignee.username}" 
+           else
+            update_message+=" none "
+           end
+           if value[1] !=nil
+              update_message+=" to #{User.find(value[1]).username}"
+           else
+              update_message+=" to none"
+           end
+        elsif(key=="title")
+          update_message+="Ticket title"
+        elsif(key=="description")
+          update_message+="Ticket description"
+        else
+          update_message+=key
+        end
+      end
       @sys_note = Note.create(updateuserid: 1, description: update_message, ticket_id: @ticket.id)
       if save_all(@ticket, @sys_note)
+        if(is_closed)
+          UserMailer.ticket_closed(@ticket.reported_by_user, @ticket.assigned_to_user,@ticket).deliver
+        elsif (@is_opened)
+          UserMailer.ticket_opened(@ticket.reported_by_user, @ticket.assigned_to_user,@ticket).deliver
+        end
+        if(@is_reassigned)
+          UserMailer.ticket_assigned(@previous_assignee,@ticket).deliver
+        end
         flash[:success] = "Ticket updated"
         redirect_to @ticket
       else
@@ -88,6 +130,8 @@ class TicketsController < ApplicationController
   end
 
   private
+    def create_update_msg
+    end
 
     def ticket_params
       params.require(:ticket).permit(:title, :description,:issue_type_id, 
@@ -125,6 +169,8 @@ class TicketsController < ApplicationController
         false
       end
     end
+
+    
 
     def is_closed
       if ( @ticket.ticket_state_id ==5  || @ticket.ticket_state_id ==6)

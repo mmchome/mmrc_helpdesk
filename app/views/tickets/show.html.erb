@@ -22,7 +22,7 @@
   <th>Priority</th>
   <td><%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name,{},:readonly => @is_readonly) %></td>
 
-  <th>Current State</th>
+  <th>Ticket State</th>
   <td><%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {},:readonly => @is_readonly) %></td>
 </tr>
 <tr>

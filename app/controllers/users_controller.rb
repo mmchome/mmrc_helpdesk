@@ -41,6 +41,7 @@ class UsersController < ApplicationController
     if @user.save
       flash[:success] = "Welcome to MMRC's ticketing system!"
       redirect_to @user
+      UserMailer.welcome_email(@user).deliver
     else
       render 'new'
     end
@@ -67,10 +68,10 @@ class UsersController < ApplicationController
       redirect_to(root_url) unless current_user.user_types_id==1
     end
 
+
     def correct_user
       @user = User.find(params[:id])
       redirect_to(root_url) unless current_user?(@user)||current_user.user_types_id==1
     end
   
-
 end

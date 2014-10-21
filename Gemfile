@@ -7,6 +7,8 @@ gem 'bootstrap-sass', '2.3.2.0'
 #from ruby-gemset=railstutorial_rails_4_0
 gem "jquery-ui-rails", "4.2.0"
 
+#active directory intergration
+gem 'adauth', '2.0.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.4'

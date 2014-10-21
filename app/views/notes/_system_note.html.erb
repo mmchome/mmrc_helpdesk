@@ -1,7 +1,7 @@
 <%for note in @ticket_notes_system %>
 <tr>
   <td>
-      <%= note.description %>
+      <%= simple_format(note.description) %>
   </td> 
   <td>
      <%= note.created_at.to_formatted_s(:long) %></span>

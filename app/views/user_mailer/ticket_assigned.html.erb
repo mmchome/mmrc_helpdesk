@@ -1,0 +1,26 @@
+<h3>Ticket <%=@ticket.id%> has been (re)assigned </h3>
+<p>Ticket <%=@ticket.id%> titled: <b> <%=@ticket.title%></b> has been re-assigned<br> 
+<ul>
+	<ol>Ticket-Owner:  
+	   <%=@owner.username%>
+	</ol>
+		   
+	<ol>Old-Assignee: 
+	    <%= if @previous_assignee != nil
+	    		@previous_assignee.username
+	    	else
+	    		"none"
+	    	end
+	     %>
+	</ol>
+	<ol>New-Assignee: 	
+		<%=if @assignee != nil
+			@assignee.username
+		   else
+		   	"none"
+		   end
+			%>
+		</ol>
+</ul>
+<p>For further information on this ticket please visit <%= @url %>.</p>
+

@@ -44,19 +44,6 @@ class Ticket < ActiveRecord::Base
     	end
   	end
 
-  	#using the sunsolar textsearch gem
-  	# searchable do
-   # 		text :title, :description
-   # 		text :issue_type_name
-   # 		text :priority_name 
-   # 		text :state_name, :id,:reported_name
-   # 		string :title
-   # 		integer :id
-   # 		time :created_at
-   # 		time :updated_at
-
-  	# end
-
   	def issue_type_name
   		issue_type.name
   	end
