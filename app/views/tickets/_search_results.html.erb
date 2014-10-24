@@ -1,4 +1,4 @@
-<table class="table  table-striped  table-hover">
+<table class="table    table-hover">
   <tr>
     <th><%=sortable "id", "Id" %></th>
     <th><%=sortable "ticket_priority_id", "Priority"%>
@@ -12,9 +12,14 @@
   </tr>
 
   <%for ticket in @tickets %>
-   <tr >
+   <tr class="<%=row_color ticket.state.name, ticket.assigned_to, ticket.updated_at, ticket.created_at%>">
     <td><%=ticket.id%></td>
-    <td><%=ticket.priority.name%></td>
+    <td>
+      <span class="<%="badge badge#{issue_type_badge ticket.priority.name}"%>" >
+        <%=ticket.priority.name%>
+      </span>
+    </td>
+    
     <td><%=ticket.issue_type.name%></td>
     <td><%=link_to ticket.title,ticket%></td>
     <td><%=ticket.reported_by_user.username%></td>

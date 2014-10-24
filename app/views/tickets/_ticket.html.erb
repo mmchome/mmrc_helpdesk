@@ -1,6 +1,9 @@
 <li>
-  <span class="title"><%= link_to ticket.title,ticket %></span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(ticket.created_at) %> ago.
-  </span>
+  <span class="ticket-number">Ticket: <%=ticket.id %></span>
+  <p>
+  	<span class="title"><%= link_to ticket.title,ticket %></span>
+  	<span class="timestamp">
+    	Posted <%= time_ago_in_words(ticket.created_at) %> ago.
+  	</span>
+  </p>
 </li>

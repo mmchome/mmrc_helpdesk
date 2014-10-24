@@ -1,27 +1,46 @@
  <% provide(:title, @user.username) %>
 <div class="row">
-  <aside class="span4">
+  <aside class="span3">
     <section>
       <h1>
         <%= gravatar_for @user %>
         <%= @user.first_name%> <%= @user.last_name%>
-      </h1>
+      </h1> 
     </section>
   </aside>
-    <div class="span8">
-    <% if @reported_by_ticket.any? %>
-      <h3>Reported tickets (<%= @reported_by_ticket.count %>)</h3>
-      <ol class="tickets">
-        <%= render @reported_by_ticket %>
-      </ol>
-      <%= will_paginate @reported_by_ticket %>
-    <% end %>
-    <% if @assigned_to_ticket.any? %>
-      <h3>Assigned tickets (<%= @assigned_to_ticket.count %>)</h3>
-      <ol class="tickets">
-        <%= render @assigned_to_ticket %>
-      </ol>
-      <%= will_paginate @reported_by_ticket %>
-    <% end %>
-  </div>
+    
+   <!-- tabs right -->
+   <div class="span9">
+      <div class="tabbable tabs-right">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#1" data-toggle="tab">Reported Tickets (Open)</a></li>
+          <li><a href="#2" data-toggle="tab">Assigned Tickets (Open)</a></li>
+          <li><a href="#3" data-toggle="tab">Reported Tickets (Closed)</a></li>
+          <li><a href="#4" data-toggle="tab">Assigned Tickets (Closed)</a></li>
+        </ul>
+        <div class="tab-content">
+         <div class="tab-pane active" id="1">
+            <ol class="tickets">
+              <%= render @reported_by_ticket.where('ticket_state_id not in (?)', [5,6]) %>
+            </ol>
+         </div>
+         <div class="tab-pane" id="2">
+            <ol class="tickets">
+              <%= render @assigned_to_ticket.where('ticket_state_id not in (?)', [5,6]) %>
+            </ol>
+         </div>
+         <div class="tab-pane" id="3">
+            <ol class="tickets">
+              <%= render @reported_by_ticket.where('ticket_state_id  in (?)', [5,6]) %>
+            </ol>
+         </div>
+          <div class="tab-pane" id="4">
+            <ol class="tickets">
+              <%= render @assigned_to_ticket.where('ticket_state_id  in (?)', [5,6]) %>
+            </ol>
+         </div>
+        </div>
+      </div>
+    </div>
+      <!-- /tabs -->
 </div>
