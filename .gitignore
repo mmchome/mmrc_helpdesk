@@ -7,6 +7,7 @@
 # Ignore bundler config.
 /.bundle
 
+
 #Ignore config
 config/environments/*
 config/initializers/*
