@@ -1,9 +1,30 @@
 <li>
-  <span class="ticket-number">Ticket: <%=ticket.id %></span>
-  <p>
-  	<span class="title"><%= link_to ticket.title,ticket %></span>
-  	<span class="timestamp">
+ 	<span class="title"><%= link_to ticket.title + " ##{ticket.id}",ticket %></span>
+
+	Issue Priority:
+	  	<span class="<%="badge alert#{issue_type_badge ticket.priority.name}"%>" >
+	          <%=ticket.priority.name%> 
+	    </span>
+  
+	| Ticket State:
+    <span class="state">
+    <%= ticket.state.name%>
+    </span>
+    <%if ticket.assigned?%>
+    	| <span class="badge alert-info"> 
+         "Assigned"
+    	 </span>
+    	<%else%>
+    	|  <span class="badge alert-warning"> 
+          "Not Assigned"
+    	 </span>
+    <%end%>
+    </br>
+    <span class="timestamp">
+    	Updated <%= time_ago_in_words(ticket.updated_at) %> ago |
+  	</span>
+    <span class="timestamp">
     	Posted <%= time_ago_in_words(ticket.created_at) %> ago.
   	</span>
-  </p>
+ 
 </li>

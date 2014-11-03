@@ -1,11 +1,19 @@
+ <div class="row">
+  <%= form_tag tickets_path, :method => 'get', :id => "tickets_search" do %>
+    <%= hidden_field_tag :direction, params[:direction] %>
+    <div class="input-group" >
+
+      <%= text_field_tag :search, params[:search],   :class =>"form-control"%>
+      <span class="input-group-btn">
+      	<button class="btn btn-default  btn-red" type="button">Search </button>
+         <!--i class="icon-search" type="submit"></i>
+          <span class="glyphicon glyphicon-search"></span--> 
+      </span> 
+    </div>
+  <%end%>
+</br>
+<div >
  
- <%= form_tag tickets_path, :method => 'get', :id => "tickets_search" do %>
-  <%= hidden_field_tag :direction, params[:direction] %>
-  <%= hidden_field_tag :sort, params[:sort] %>
-  <div class="input-append" >
-    <%= text_field_tag :search, params[:search] %>
-    <button class="btn" type="submit"><i class="icon-search"></i></button>
-  </div>
-<%end%>
+ 
 
  

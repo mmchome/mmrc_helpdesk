@@ -15,7 +15,7 @@
    <tr class="<%=row_color ticket.state.name, ticket.assigned_to, ticket.updated_at, ticket.created_at%>">
     <td><%=ticket.id%></td>
     <td>
-      <span class="<%="badge badge#{issue_type_badge ticket.priority.name}"%>" >
+      <span class="<%="badge alert#{issue_type_badge ticket.priority.name}"%>" >
         <%=ticket.priority.name%>
       </span>
     </td>

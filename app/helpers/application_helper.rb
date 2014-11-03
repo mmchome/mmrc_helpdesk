@@ -9,7 +9,7 @@ module ApplicationHelper
   def issue_type_badge(title= nil)
   	case title
   	when "Critical"
-  		return "-important"
+  		return "-danger"
   	when "High"
   		return "-warning"
   	when "Medium"
@@ -19,6 +19,21 @@ module ApplicationHelper
   	else
   		return ''
   	end
+  end
+
+  def bootstrap_class_for flash_type
+    case flash_type
+      when :success
+        "alert-success" # Green
+      when :error
+        "alert-danger" # Red
+      when :alert
+        "alert-warning" # Yellow
+      when :notice
+        "alert-info" # Blue
+      else
+        flash_type.to_s
+      end
   end
 
   def row_color ticket_state_name, assigned_to, updated_at, created_at
@@ -32,7 +47,7 @@ module ApplicationHelper
   		return "info"
   	#open and not touched for a week
   	elsif ticket_state_name == "Open" && updated_at< (Time.now - 7.days)
-  		return "error"
+  		return "danger"
   	else
   		return "" 
   	end

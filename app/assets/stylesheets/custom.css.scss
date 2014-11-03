@@ -1,18 +1,14 @@
 
-//$linkColor: #FF69d6;
+$white: #fff;
+$red: #8A2E2E;
+$blue: #6699FF;
+$grey:#BDBDA7;
+
 @import "bootstrap";
 
-/*
-//navbar
-// Inverse navbar
-.navbar-inverse .container {
-background-color: $navbar-inverse-bg;
-border-color: $navbar-inverse-border;
-}
-*/
 /* mixins, variables, etc. */
 
-$grayMediumLight: #eaeaea;
+$gray_medium_light: #eaeaea;
 
 /* universal */
 
@@ -39,6 +35,20 @@ textarea {
   }
 }
 
+
+
+.hero-unit {
+padding: 60px;/* CHANGE PADDING HERE*/
+margin-bottom: 30px; 
+font-size: 18px;
+font-weight: 200;
+line-height: 30px;
+color: inherit;
+background-color:#C8C8AC;/* #eeeeee;  CHANGE BACKGROUND HERE*/
+-webkit-border-radius: 6px;
+-moz-border-radius: 6px;
+border-radius: 6px;
+}
 
 
 @mixin box_sizing {
@@ -75,7 +85,7 @@ h2 {
   margin-bottom: 30px;
   text-align: center;
   font-weight: normal;
-  color: $grayLight;
+  color: $gray-light;
 }
 
 p {
@@ -84,23 +94,55 @@ p {
 }
 
 
-/* header */
+.navbar ,.navbar div.navbar-inner ul.nav a{
+    background-color: $grey;
+    border-color: $grey;
+    font-weight: bold;
+
+}
+
+/* navbar customizations */
+
+.navbar div.navbar-inner ul.nav a:hover,
+.navbar .nav li.dropdown.open > .dropdown-toggle,
+.navbar .nav li.dropdown.hover > .dropdown-toggle,
+{
+    color: $white !important;
+    background-color: $red !important;
+    border-color: $red;
+    font-weight: bold;
+}
+
 
 #logo {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: white;
+  color: #000000;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
-  font-weight: bold;
+ 
   line-height: 1;
   &:hover {
-    color: white;
+    color: $red;
     text-decoration: none;
   }
 }
+
+/*Buttons and such*/
+
+.btn-red{
+    background: $red;
+    border-color: $red;
+    color: $white;
+    &:hover {
+      color: $white;
+      font-weight: bold;
+    }
+}
+
+
 
 
 /* sidebar */
@@ -108,7 +150,7 @@ p {
 aside {
   section {
     padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    border-top: 1px solid $gray_lighter;
     &:first-child {
       border: 0;
       padding-top: 0;
@@ -133,7 +175,7 @@ aside {
   a {
     float: left;
     padding: 0 10px;
-    border-left: 1px solid $grayLighter;
+    border-left: 1px solid $gray_lighter;
     color: gray;
     &:first-child {
       padding-left: 0;
@@ -150,7 +192,7 @@ aside {
 }
 
 
-.gravatar {
+.avatar {
   float: left;
   margin-right: 10px;
 }
@@ -186,12 +228,12 @@ input {
 footer {
   margin-top: 45px;
   padding-top: 5px;
-  border-top: 1px solid $grayMediumLight;
-  color: $grayLight;
+  border-top: 1px solid $gray_medium_light;
+  color: $gray_light;
   a {
     color: $gray;
     &:hover {
-      color: $grayDarker;
+      color: $gray_darker;
     }
   }
   small {
@@ -214,10 +256,10 @@ footer {
   margin: 0;
   li {
     overflow: auto;
-    padding: 10px 0;
-    border-top: 1px solid $grayLighter;
+    padding: 5px 0;
+    border-top: 1px solid $gray_lighter;
     &:last-child {
-      border-bottom: 1px solid $grayLighter;
+      border-bottom: 1px solid $gray_lighter;
     }
   }
 }
@@ -233,11 +275,15 @@ footer {
     border-top: 1px solid #e8e8e8;
   }
 }
-.tittle{
+.title{
   display: block;
+  font-weight: bold;
+}
+.state{
+  font-weight: bold;
 }
 .timestamp {
-  color: $grayLight;
+  color: $gray_light;
 }
 .gravatar {
   float: left;
@@ -290,17 +336,21 @@ aside {
 }
 
 
-/*bootstrap append on search view need wider span*/
 
-.input-append {
-  width: 96%;
+/*bootstrap append on search view need wider span
+
+.input-group {
+  width: 90%;
 }
 
+*/
+
+/*
 .table tbody tr:hover td, .table tbody tr:hover th {
     background-color: #e4fec9;   //green
 }
 
-
+*/
 
 
 /* trade notes table - mainly */
@@ -309,32 +359,115 @@ table,th,td
 {
  text-align:left;
  border-collapse:collapse;
- padding:8px
+ padding:20px
 
   
 }
 
+/* custom inclusion of right, left and below tabs */
 
-
-/*trade detail table 
-
-.pretty th .current {
-  padding-right: 12px;
-  background-repeat: no-repeat;
-  background-position: right center;
-  
+.tabs-below > .nav-tabs,
+.tabs-right > .nav-tabs,
+.tabs-left > .nav-tabs {
+  border-bottom: 0;
 }
 
-.pretty th .asc {
-  background-image: url(/images/up_arrow.gif);
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
 }
 
-.pretty th .desc {
-  background-image: url(/images/down_arrow.gif);
-}
-.pretty td {
-  padding-right: 12px;
-  border:1px solid black;
+.tab-content > .active,
+.pill-content > .active {
+  display: block;
 }
 
-*/
+.tabs-below > .nav-tabs {
+  border-top: 1px solid #ddd;
+}
+
+.tabs-below > .nav-tabs > li {
+  margin-top: -1px;
+  margin-bottom: 0;
+}
+
+.tabs-below > .nav-tabs > li > a {
+  -webkit-border-radius: 0 0 4px 4px;
+     -moz-border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
+}
+
+.tabs-below > .nav-tabs > li > a:hover,
+.tabs-below > .nav-tabs > li > a:focus {
+  border-top-color: #ddd;
+  border-bottom-color: transparent;
+}
+
+.tabs-below > .nav-tabs > .active > a,
+.tabs-below > .nav-tabs > .active > a:hover,
+.tabs-below > .nav-tabs > .active > a:focus {
+  border-color: transparent #ddd #ddd #ddd;
+}
+
+.tabs-left > .nav-tabs > li,
+.tabs-right > .nav-tabs > li {
+  float: none;
+}
+
+.tabs-left > .nav-tabs > li > a,
+.tabs-right > .nav-tabs > li > a {
+  min-width: 74px;
+  margin-right: 0;
+  margin-bottom: 3px;
+}
+
+.tabs-left > .nav-tabs {
+  float: left;
+  margin-right: 19px;
+  border-right: 1px solid #ddd;
+}
+
+.tabs-left > .nav-tabs > li > a {
+  margin-right: -1px;
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+
+.tabs-left > .nav-tabs > li > a:hover,
+.tabs-left > .nav-tabs > li > a:focus {
+  border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+}
+
+.tabs-left > .nav-tabs .active > a,
+.tabs-left > .nav-tabs .active > a:hover,
+.tabs-left > .nav-tabs .active > a:focus {
+  border-color: #ddd transparent #ddd #ddd;
+  *border-right-color: #ffffff;
+}
+
+.tabs-right > .nav-tabs {
+  float: right;
+  margin-left: 19px;
+  border-left: 1px solid #ddd;
+}
+
+.tabs-right > .nav-tabs > li > a {
+  margin-left: -1px;
+  -webkit-border-radius: 0 4px 4px 0;
+     -moz-border-radius: 0 4px 4px 0;
+          border-radius: 0 4px 4px 0;
+}
+
+.tabs-right > .nav-tabs > li > a:hover,
+.tabs-right > .nav-tabs > li > a:focus {
+  border-color: #eeeeee #eeeeee #eeeeee #dddddd;
+}
+
+.tabs-right > .nav-tabs .active > a,
+.tabs-right > .nav-tabs .active > a:hover,
+.tabs-right > .nav-tabs .active > a:focus {
+  border-color: #ddd #ddd #ddd transparent;
+  *border-left-color: #ffffff;
+}
+

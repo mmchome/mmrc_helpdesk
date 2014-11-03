@@ -20,6 +20,9 @@ class Ticket < ActiveRecord::Base
 	def assigned?(to_user)
 	  	tickets.find_by(assigned_to: to_user.id)
 	end
+  def assigned?
+    return assigned_to?
+  end
 
 	def reported?(to_user)
 	  	tickets.find_by(reported_by: to_user.id)

@@ -1,11 +1,17 @@
+#http_proxy="10.10.10.1:3128"  --this if for mmrc proxy settings
 source 'http://rubygems.org'
-
 ruby '2.0.0'
-gem 'bootstrap-sass', '2.3.2.0'
-#gem 'bootstrap-sass', '3.1.1'
-
+#gem 'bootstrap-sass', '2.3.2.0'
+gem 'bootstrap-sass', '3.1.1' 
+gem 'bootstrap_form', '2.2.0'
+gem "nested_form",'0.3.2'
 #from ruby-gemset=railstutorial_rails_4_0
 gem "jquery-ui-rails", "4.2.0"
+
+#for avatars
+gem "rmagick",'2.13.3'
+gem "carrierwave", '0.10.0'
+
 
 #active directory intergration
 gem 'adauth', '2.0.5'

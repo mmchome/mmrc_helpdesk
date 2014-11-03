@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140624125140) do
+ActiveRecord::Schema.define(version: 20141024061102) do
 
   create_table "issue_types", force: true do |t|
     t.string   "name"
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(version: 20140624125140) do
     t.integer  "user_types_id",   default: 3
     t.string   "password_digest"
     t.string   "remember_token"
+    t.string   "avatar"
   end
 
   add_index "users", ["remember_token"], name: "index_users_on_remember_token"

@@ -1,22 +1,37 @@
  <% provide(:title, @user.username) %>
 <div class="row">
-  <aside class="span3">
+  <!--aside class="span3"-->
+  <aside class="col-md-3">
     <section>
+        <%= image_tag(@user.avatar_url(:thumb)) if @user.avatar? %>
       <h1>
-        <%= gravatar_for @user %>
         <%= @user.first_name%> <%= @user.last_name%>
       </h1> 
     </section>
   </aside>
-    
+  
    <!-- tabs right -->
-   <div class="span9">
-      <div class="tabbable tabs-right">
+   <!--div class="span9"-->
+   <div class="col-md-9"> 
+      <!--div class="tab tabs-right"-->
+       <div class="tabbable tabs-right">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#1" data-toggle="tab">Reported Tickets (Open)</a></li>
-          <li><a href="#2" data-toggle="tab">Assigned Tickets (Open)</a></li>
-          <li><a href="#3" data-toggle="tab">Reported Tickets (Closed)</a></li>
-          <li><a href="#4" data-toggle="tab">Assigned Tickets (Closed)</a></li>
+          <li class="active">
+            <a href="#1" data-toggle="tab">Reported (Open
+            <%=@reported_by_ticket.where('ticket_state_id not in (?)', [5,6]).count %>)</a>
+          </li>
+          <li>
+            <a href="#2" data-toggle="tab">Assigned (Open 
+            <%=@assigned_to_ticket.where('ticket_state_id not in (?)', [5,6]).count %>)</a>
+          </li>
+          <li>
+            <a href="#3" data-toggle="tab">Reported (Closed
+              <%=@reported_by_ticket.where('ticket_state_id in (?)', [5,6]).count %>)</a>
+          </li>
+          <li>
+            <a href="#4" data-toggle="tab">Assigned (Closed
+              <%=@assigned_to_ticket.where('ticket_state_id  in (?)', [5,6]).count %>)</a>
+          </li>
         </ul>
         <div class="tab-content">
          <div class="tab-pane active" id="1">

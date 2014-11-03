@@ -61,7 +61,7 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:username,:first_name, :last_name, :email,:user_types_id,:password,:password_confirmation,)   #not complete usertypes will need to be added separately
+      params.require(:user).permit(:remove_avatar,:avatar, :avatar_cache, :username,:first_name, :last_name, :email,:user_types_id,:password,:password_confirmation,)   #not complete usertypes will need to be added separately
     end
     
     def admin_user

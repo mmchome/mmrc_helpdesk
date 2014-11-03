@@ -2,30 +2,32 @@
 <h1>New Ticket</h1>
 
 <div class="row">
-  <div class="span6 offset3">
-    <%= form_for(@ticket) do |f| %>
+  <div class="col-md-6 col-md-offset-3">
+   
+    <%= bootstrap_form_for @ticket do |f| %>
 
       <%= render 'shared/error_messages',object: f.object %>
 
-      <%= f.label :title, "Title" %>
+      <!--%= f.label :title, "Title" %-->
       <%= f.text_field :title %>
 
-      <%= f.label :issue_type_id,  "Issue Type" %>
+  <!--     <%= f.label :issue_type_id,  "Issue Type" %> -->
       <%= f.collection_select(:issue_type_id, IssueType.all, :id, :name) %>
 
-      <%= f.label :description , "Issue description"%>
+  <!--     <%= f.label :description , "Issue description"%> -->
       <%= f.text_area :description, :size => "30x10" %>
 
-      <%= f.label :reported_by , "Reported by"%>
+<!--       <%= f.label :reported_by , "Reported by"%> -->
       <%= f.collection_select(:reported_by, User.all, :id, :username,{:selected =>@current_user.id}) %>
-
-      <%= f.label :ticket_priority_id,  "Ticket Priority" %>
+<!-- 
+      <%= f.label :ticket_priority_id,  "Ticket Priority" %> -->
       <%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name, {:selected => 3}) %>
-
-      <%= f.label :ticket_state_id,  "Ticket State" %>
+<!-- 
+      <%= f.label :ticket_state_id,  "Ticket State" %> -->
       <%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {:selected => 1}) %>
      
-      <%= f.submit "Create ticket!", class: "btn btn-large btn-primary" %>
+      <%= f.submit "Create ticket!", class: "btn btn-lrg btn-red" %>
     <% end %>
+ 
   </div>
 </div>

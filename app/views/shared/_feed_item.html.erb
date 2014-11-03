@@ -1,11 +1,35 @@
 <li id="<%= feed_item.id %>">
-  <%= link_to gravatar_for(feed_item.reported_by_user), feed_item.reported_by_user %>
-  <span class="user">
-  <%= link_to feed_item.reported_by_user.username, feed_item.reported_by_user %>
-  </span>
-  <span class="tittle"><%= link_to feed_item.id, feed_item%> : <%= feed_item.title %></span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(feed_item.created_at) %> ago.
-  </span>
+  <div class="row">
+    <!--span class="span1"-->
+      <div class="col-md-1">
+      	<%= link_to avatar_for(feed_item.reported_by_user), feed_item.reported_by_user %>
+      	</br>
+        <span class="user">
+          <%= feed_item.reported_by_user.username %>
+        </span>
+      </div>
+       <!--/span-->
+      <!--span class="span7"-->
+      <div class="col-md-7">
+      <span class="title">
+        <%=link_to feed_item.title+" ##{feed_item.id}",feed_item %>
+        </span>
+      <span class="<%="badge alert#{issue_type_badge feed_item.priority.name}"%>" >
+          <%=feed_item.priority.name%>
+      </span>
+      <%if feed_item.assigned?%>
+    	 <span class="badge alert-info"> 
+         "Assigned"
+    	 </span>
+    	<%else%>
+    	  <span class="badge alert-warning"> 
+          "Not Assigned"
+    	 </span>
+    	<%end%>
+      </br>
+      <span class="timestamp">Posted <%= time_ago_in_words(feed_item.created_at) %> ago.</span>
+   <!--/span-->
+ </div>
+  </div>
 </li>
 

@@ -4,30 +4,22 @@
   <title>MMRC Helpdesk | <%= yield(:title) %></title>
   <%= javascript_include_tag 'jquery', 'application' %>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <!--%= javascript_include_tag "application", "data-turbolinks-track" => true %-->
+  <%= stylesheet_link_tag "bootstrap-responsive", :media => "all" %>
   <%= csrf_meta_tags %>
-  
-  <!---%= stylesheet_link_tag "dhtmlxgrid", :media => "all" %-->
-  <!--%= stylesheet_link_tag "skins/dhtmlxgrid_dhx_skyblue", :media=> "all" %-->
-   
-  <!--%= javascript_include_tag "dhtmlxcommon" %-->
-  <!--%= javascript_include_tag "dhtmlxgrid" %-->
-  <!--%= javascript_include_tag "dhtmlxgridcell" %-->
-  <!--%= javascript_include_tag "dhtmlxdataprocessor" %-->
-  <!--%= javascript_include_tag "ext/dhtmlxgrid_filter" %-->
-  <!--%= javascript_include_tag "ext/dhtmlxgrid_selection"%-->
- 
   <%= render 'layouts/shim' %>
 </head>
 <body>
   <%=render 'layouts/header' %>
   <div class="container">
     <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= value %></div>
+        <div class="alert <%=bootstrap_class_for(key)%> fade in">
+          <strong><%=key.to_s%>:</strong> <%=value%> 
+          <a href="#" class="close" data-dismiss="alert">&times;</a>
+        </div>
     <% end %>
     <%= yield %>
-  	<!--%= render 'layouts/footer' %--> 
-    <%= debug(params) if Rails.env.development? %>
+  	<%= render 'layouts/footer' %> 
+    <!--%= debug(params) if Rails.env.development? %-->
   </div>
 </body>
 </html>
