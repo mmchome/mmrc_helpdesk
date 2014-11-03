@@ -7,6 +7,11 @@
 # Ignore bundler config.
 /.bundle
 
+#Ignore config
+config/environments/*
+config/initializers/*
+github-gem
+
 # Ignore the default SQLite database.
 /db/*.sqlite3
 /db/*.sqlite3-journal
