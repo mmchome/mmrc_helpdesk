@@ -3,10 +3,10 @@
 
 <h2>Details</h2>
 
-<!--div class="center hero-unit"-->
+<div class="center hero-unit">
 <div class="row">
   <table id='Details' class="col-md-10 col-md-offset-1">
-    <%= form_for(@ticket) do |f| %>
+    <%= bootstrap_form_for(@ticket) do |f| %>
     <tr>
       <th>Created</th>
       <td><%= @ticket.created_at.to_formatted_s(:long) %></td>
@@ -15,81 +15,116 @@
     </tr>
     <tr>
       <th>Reported by</th>
-        <td> <%= f.collection_select(:reported_by, User.all, :id, :username,{},:readonly => @is_readonly) %></td>
-
+      <td>
+        <%if(@is_readonly)%>
+          <%= if @ticket.reported_by!=nil then @ticket.reported_by_user.username end%>
+        <%else%>
+        <%= f.collection_select :reported_by, User.all, :id, :username,{ hide_label:true} %>
+         <%end%>
+      </td>   
         <th>Closed</th>
-        <td><%= @ticket.closed_at.to_formatted_s(:long) unless @ticket.closed_at==nil%></td>
+        <td><%= @ticket.closed_at.to_formatted_s(:long) unless @ticket.closed_at==nil %></td>
     </tr>
     <tr>
       <th>Priority</th>
-      <td><%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name,{},:readonly => @is_readonly) %></td>
-
+      <td>
+        <%if(@is_readonly)%>
+          <%=@ticket.priority.name%>
+        <%else%>
+          <%= f.collection_select(:ticket_priority_id, TicketPriority.all, :id, :name,{hide_label: true} )%>
+        <%end%>
+      </td>
+  
       <th>Ticket State</th>
-      <td><%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {},:readonly => @is_readonly) %></td>
+      <td>
+        <%if(@is_readonly)%>
+          <%=@ticket.state.name%>  
+        <%else%>
+          <%= f.collection_select(:ticket_state_id, TicketState.all, :id, :name, {hide_label: true} ) %>
+      <%end%>
+      </td>
     </tr>
     <tr>
       <th>Assigned to</th>
-      <td> <%= f.collection_select(:assigned_to, User.where(:user_types_id=>[1,2]),:id, :username,
-      :include_blank => "Not Assigned") %></td>
-
-      <th>TicketType</th> 
-      <td> <%= f.collection_select(:issue_type_id, IssueType.all, :id, :name ,{},:readonly => @is_readonly) %></td>
-    </tr>
-    <tr>
-      <th>Title</th>
-      <td colspan="3"><%= f.text_field :title , :readonly => @is_readonly %></td>
-    </tr>
-    <tr>
-      <th>Description</th>
-      <td colspan="3"> <%= f.text_area :description, :size => "30x10" , :readonly => @is_readonly%></td>
-    </tr>
-    <tr>
-      
-      <td>
-        <%if !@is_closed %>
-          <%= f.submit "Save Changes", class: "btn btn-lg  btn-red", :name => "save_changes" %>
+        <td>
+        <%if(@is_readonly)%>
+          <%=if @ticket.assigned_to!=nil then @ticket.assigned_to_user.username end%>
         <%else%>
-          <%= f.submit "Reopen", class: "btn btn-lg btn-red", :name => "reopen" %>
+          <%= f.collection_select :assigned_to, User.where(:user_types_id=>[1,2]),:id, :username,
+          {hide_label: true, :include_blank => "Not Assigned",}%>
+          <%end%>
+        </td>
+      <th>TicketType</th>
+      <td>
+        <%if(@is_readonly)%>
+            <%=@ticket.issue_type.name%>
+        <%else%>
+            <%= f.collection_select :issue_type_id, IssueType.all, :id, :name ,{hide_label: true} %>
         <%end%>
       </td>
     </tr>
-  <% end %>
-</table>
+    <tr>
+      <th>Title</th>
+      <td colspan="3"><%= f.text_field :title , :readonly => @is_readonly,hide_label: true %></td>
+    </tr>
+    <tr>
+      <th>Description</th>
+      <td colspan="3"> <%= f.text_area :description, :size => "30x5" , :readonly => @is_readonly,hide_label: true%></td>
+    </tr>
+    </table>
+    <%if !@is_closed %>
+      <%= f.submit "Save Changes", class: "btn btn-lg  btn-red", :name => "save_changes" %>
+    <%else%>
+      <%= f.submit "Reopen", class: "btn btn-lg btn-red", :name => "reopen" %>
+    <%end%>
+ <% end %>
+</div>
 </div>
 
 <h2>Notes</h2>
-<!--div class="center hero-unit"-->
+<div class="center hero-unit">
 <div class="row">
-  <table id='notes' class="col-md-10 col-md-offset-1">
-    <% if  !@is_readonly %>
-      <% form_for(@note) do |f| %>
-        <% f.hidden_field :updateuserid, value: current_user.id  %>
-        <% f.hidden_field :ticket_id, value:  @ticket.id  %>
-        <tr>
-          <td colspa="2"><% f.text_area :description, :size => "10x2" %></td>
-        </tr>
-        <tr>
-          <td>
-           Mark note as solution <%= f.check_box :is_solution %></br> 
-           <% f.submit "Make a Note", class: "btn btn-lg btn-red" %>
-          </td>
-      </tr>
+    <%if !@is_readonly %>
+      <%= bootstrap_form_for(@note) do |f| %>
+        <%= f.hidden_field :updateuserid, value: current_user.id  %>
+        <%= f.hidden_field :ticket_id, value:  @ticket.id %>   
+        <%= f.text_area :description, :size => "10x2" ,hide_label: true, placeholder: "Make a note.. .."%>
+        <%= f.form_group :is_solution,  hide_label: true do%>
+        <%= f.check_box :is_solution, {style: "float:none"} %>
+        <%end%>
+      </p>
+        <%= f.submit "Make a Note", class: "btn btn-lg btn-red" ,hide_label: true%>
       <% end %>
     <% end %>
+  <table id='notes' class="col-md-10 col-md-offset-1">
     <% if@ticket_notes_user.any? %>
       <%= render  @ticket_notes_user%>
-    </table>
-</div>
- <% end %>
-<!--/div-->	
+    <%end %>
+  </table>
+</div> 
+</div>	
 
-<h2>History</h2>
-<!--div class="center hero-unit"-->
-  <% if@ticket_notes_system.any? %>
-    <div class="row">
-      <table class="history" class="col-md-10 col-md-offset-1">
-
-            <%= render  'notes/system_note'%>
-      </table>
+  <h2>History  <%= check_box_tag :show_history,'Show History',false  %></h2> 
+  <div id="history" style="display: none">
+    <div class="center hero-unit">
+      <% if@ticket_notes_system.any? %>
+        <div class="row">
+          <table class="history" class="col-md-10 col-md-offset-1">
+                <%= render  'notes/system_note'%>
+          </table>
+        </div> 
+     <% end %>
     </div> 
- <% end %>
+  </div>
+
+<script type="text/javascript">
+  var checkbox = document.getElementById('show_history');
+  var details_div = document.getElementById('history');
+  checkbox.onchange = function() {
+     if(this.checked) {
+       details_div.style['display'] = 'block';
+     } else {
+       details_div.style['display'] = 'none';
+     }
+  };
+</script>

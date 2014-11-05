@@ -38,7 +38,7 @@ textarea {
 
 
 .hero-unit {
-padding: 60px;/* CHANGE PADDING HERE*/
+padding: 30px;/* CHANGE PADDING HERE*/
 margin-bottom: 30px; 
 font-size: 18px;
 font-weight: 200;
@@ -140,6 +140,8 @@ p {
       color: $white;
       font-weight: bold;
     }
+    margin: auto;
+
 }
 
 
@@ -201,7 +203,7 @@ aside {
 
 input, textarea, select, .uneditable-input {
   border: 1px solid #bbb;
-  width: 100%;
+  /*width: 100%;*/
   margin-bottom: 15px;
   @include box_sizing;
 }
@@ -359,7 +361,7 @@ table,th,td
 {
  text-align:left;
  border-collapse:collapse;
- padding:20px
+ padding:10px
 
   
 }
