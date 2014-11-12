@@ -1,4 +1,4 @@
-#http_proxy="10.10.10.1:3128"  --this if for mmrc proxy settings
+#http_proxy="gateway.mbeya.mmrp.org:3128"  
 source 'http://rubygems.org'
 ruby '2.0.0'
 #gem 'bootstrap-sass', '2.3.2.0'
@@ -44,8 +44,9 @@ end
 gem 'faker', '1.1.2'
 
 #pagination of index, not that pretty :(
-gem 'will_paginate', '3.0.4'
-gem 'bootstrap-will_paginate', '0.0.9'
+#gem 'will_paginate', '3.0.4'
+#gem 'bootstrap-will_paginate', '0.0.9'
+gem 'will_paginate-bootstrap' , '1.0.1'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

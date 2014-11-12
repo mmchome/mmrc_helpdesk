@@ -46,8 +46,10 @@ class User < ActiveRecord::Base
     	end
 
       def file_size
-        if avatar.file.size.to_f/(1000*1000) > 0.3.to_f
-          errors.add(:file, "You cannot upload a file greater than #{0.3.to_f}MB")
+        if avatar.file!=nil
+          if avatar.file.size.to_f/(1000*1000) > 0.3.to_f
+            errors.add(:file, "You cannot upload a file greater than #{0.3.to_f}MB")
+          end
       end
   end
 

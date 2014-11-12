@@ -1,4 +1,6 @@
-<li>
+
+<li class="list-group">
+  <div>
  	<span class="title"><%= link_to ticket.title + " ##{ticket.id}",ticket %></span>
 
 	Issue Priority:
@@ -26,5 +28,12 @@
     <span class="timestamp">
     	Posted <%= time_ago_in_words(ticket.created_at) %> ago.
   	</span>
- 
+  </row>
 </li>
+
+<!--ul class="list-group">
+  <li class="list-group-item list-group-item-success">Dapibus ac facilisis in</li>
+  <li class="list-group-item list-group-item-info">Cras sit amet nibh libero</li>
+  <li class="list-group-item list-group-item-warning">Porta ac consectetur ac</li>
+  <li class="list-group-item list-group-item-danger">Vestibulum at eros</li>
+</ul-->
